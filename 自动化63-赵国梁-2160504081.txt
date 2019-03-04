@@ -1,0 +1,185 @@
+第二问：
+clear
+Or=imread('lena.bmp');%读取图像“lena.bmp”
+figure(1)
+imshow(Or);
+title('原图');%显示k=8的原始图像
+[x,y]=size(Or);%读取图像“lena.bmp”的长和宽
+
+pic7=zeros(x,y);%产生一个名为pic7的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic7(i,j)=floor(Or(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(2)
+imshow((pic7),[0,127]);
+title('7灰度级');
+
+pic6=zeros(x,y);%产生一个名为pic6的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic6(i,j)=floor(pic7(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(3)
+imshow((pic6),[0,63]);
+title('6灰度级');
+
+pic5=zeros(x,y);%产生一个名为pic5的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic5(i,j)=floor(pic6(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(4)
+imshow((pic5),[0,31]);
+title('5灰度级');
+
+pic4=zeros(x,y);%产生一个名为pic4的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic4(i,j)=floor(pic5(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(5)
+imshow((pic4),[0,15]);
+title('4灰度级');
+
+pic3=zeros(x,y);%产生一个名为pic3的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic3(i,j)=floor(pic4(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(6)
+imshow((pic3),[0,7]);
+title('3灰度级');
+
+pic2=zeros(x,y);%产生一个名为pic2的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic2(i,j)=floor(pic3(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(7)
+imshow((pic2),[0,3]);
+title('2灰度级');
+
+pic1=zeros(x,y);%产生一个名为pic1的512X512的0矩阵
+for i=1:x
+    for j=1:y
+        pic1(i,j)=floor(pic2(i,j)/2);%将原图像的每个像素的灰度级除以2，并用函数floor进行向下取整
+    end
+end
+figure(8)
+imshow((pic1),[0,1]);
+title('1灰度级')
+
+第三问：
+clear 
+Or=imread('lena.bmp');%读取图像“lena.bmp”
+averege=mean2(Or)%计算均值
+fc=std2(Or)%计算方差
+
+第四问：
+ clear 
+Or=imread('lena.bmp');%读取图像“lena.bmp”
+figure(1);
+imshow(Or);
+title('原图像');
+PN=imresize(Or,[2048,2048],'nearest');% 最近邻内插法
+figure(2);
+imshow(PN);
+title('最近邻内插法所得图像');
+PB=imresize(Or,[2048,2048],'bilinear');%双线性内插法
+figure(3);
+imshow(PB);
+title('双线性内插法所得图像');
+PC=imresize(Or,[2048,2048],'bicubic');%双三次内插法
+figure(4);
+imshow(PC);
+title('双三次内插法所得图像')
+
+第五问：
+水平偏移：
+clear 
+P1=imread('lena.bmp');%读取图像“lena.bmp”
+P2=imread('elain1.bmp');%读取图像“elain1.bmp”
+T=[1 1.5 0;0 1 0;0 0 1];%水平shear 1.5
+form=maketform('affine',T);
+P11=imtransform(P1,form);
+P1N=imresize(P11,[2048 2048],'nearest');%最近邻
+P1B=imresize(P11,[2048 2048],'bilinear');%双线性
+P1C=imresize(P11,[2048 2048],'bicubic');%双三次
+figure(1);
+subplot(2,2,1);
+imshow(P1);
+title('lena原图像');
+subplot(2,2,2);
+imshow(P1N);
+title('水平偏移 lena最近邻');
+subplot(2,2,3);
+imshow(P1B);
+title('水平偏移 lena双线性');
+subplot(2,2,4);
+imshow(P1C);
+title('水平偏移 lena双三次');
+P22=imtransform(P2,form);
+P2N=imresize(P22,[2048 2048],'nearest');%最近邻
+P2B=imresize(P22,[2048 2048],'bilinear');%双线性
+P2C=imresize(P22,[2048 2048],'bicubic');%双三次
+figure(2);
+subplot(2,2,1);
+imshow(P2);
+title('elain1原图像');
+subplot(2,2,2);
+imshow(P2N);
+title('水平偏移 elain1最近邻');
+subplot(2,2,3);
+imshow(P2B);
+title('水平偏移 elain1双线性');
+subplot(2,2,4);
+imshow(P2C);
+title('水平偏移 elain1双三次')
+
+旋转30度：
+clear 
+P1=imread('lena.bmp');%读取图像“lena.bmp”
+P2=imread('elain1.bmp');%读取图像“elain1.bmp”
+T=[cosd(30) sind(30) 0;-sind(30) cos(30) 0;0 0 1];%旋转矩阵
+form=maketform('affine',T);
+P11=imtransform(P1,form);
+P1N=imresize(P11,[2048 2048],'nearest');%最近邻
+P1B=imresize(P11,[2048 2048],'bilinear');%双线性
+P1C=imresize(P11,[2048 2048],'bicubic');%双三次
+figure(1);
+subplot(2,2,1);
+imshow(P1);
+title('lena原图像');
+subplot(2,2,2);
+imshow(P1N);
+title('旋转30度 lena最近邻');
+subplot(2,2,3);
+imshow(P1B);
+title('旋转30度 lena双线性');
+subplot(2,2,4);
+imshow(P1C);
+title('旋转30度 lena双三次');
+P22=imtransform(P2,form);
+P2N=imresize(P22,[2048 2048],'nearest');%最近邻
+P2B=imresize(P22,[2048 2048],'bilinear');%双线性
+P2C=imresize(P22,[2048 2048],'bicubic');%双三次
+figure(2);
+subplot(2,2,1);
+imshow(P2);
+title('elain1原图像');
+subplot(2,2,2);
+imshow(P2N);
+title('旋转30度 elain1最近邻');
+subplot(2,2,3);
+imshow(P2B);
+title('旋转30度 elain1双线性');
+subplot(2,2,4);
+imshow(P2C);
+title('旋转30度 elain1双三次')
